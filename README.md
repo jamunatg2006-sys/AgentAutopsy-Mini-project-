@@ -30,8 +30,8 @@ TRACE  ➔  INVESTIGATE  ➔  INTERVENE SAFELY  ➔  COMPARE  ➔  VALIDATE
 |---|---|---|
 | **Avinash Singh Pal** | Core Builder 1 — Agent & Backend Lead | LangGraph demo agent, trace instrumentation, FastAPI app, MongoDB persistence, API integration |
 | **Jamuna T.G.** | Core Builder 2 — Investigation & AI Lead | Failure detection rules, dependency analysis (`NetworkX`), LLM diagnosis contracts, candidate ranking, system coordination |
-| **K. Monisha** | Replay & Validation Engineer | Isolated sandbox replay runner, intervention types, mock tools & fixtures, regression test suite |
-| **Harshit Malik** | Frontend & Visualization Engineer | React dashboard, timeline explorer, React Flow dependency graph, Replay comparison UI, reports |
+|| Replay & Validation Engineer | Isolated sandbox replay runner, intervention types, mock tools & fixtures, regression test suite |
+|| Frontend & Visualization Engineer | React dashboard, timeline explorer, React Flow dependency graph, Replay comparison UI, reports |
 
 ---
 

@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #0B1020;
+    background-image: 
+      radial-gradient(ellipse 80% 50% at 50% -15%, rgba(155, 114, 255, 0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 85%, rgba(66, 217, 245, 0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 35% at 10% 65%, rgba(99, 155, 255, 0.04) 0%, transparent 60%),
+      linear-gradient(to bottom, #0B1020 0%, #070B16 100%);
+    color: #A7B0C5;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Headings use Space Grotesk */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #F4F5FF;
+    letter-spacing: -0.015em;
+  }
+
+  /* Custom subtle matte scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0B1020;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1B253D;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #25324E;
+  }
+}
+
+/* React Flow Forensic Workstation Canvas */
+.react-flow__renderer {
+  background-color: #0B1020 !important;
+}
+
+.react-flow__handle {
+  background: #42D9F5 !important;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 9999px !important;
+  border: 1.5px solid #0B1020 !important;
+  box-shadow: 0 0 10px rgba(66, 217, 245, 0.6) !important;
+}
+
+.react-flow__edge-path {
+  stroke: #25324E !important;
+  stroke-width: 2 !important;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #42D9F5 !important;
+  filter: drop-shadow(0 0 8px rgba(66, 217, 245, 0.5));
+}

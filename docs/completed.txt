@@ -1,0 +1,45 @@
+Ran run backend pytest suite
+Analyzed api.ts:L1-25
+Analyzed main.py:L1-63
+Analyzed runs.py:L1-93
+Analyzed support_agent.py:L1-100
+Ran smoke-test FastAPI endpoints with TestClient
+Ran check all FastAPI routes and responses
+
+
+### 1. Backend Status (Tested & Verified)
+
+#### ✅ Done — Core Investigation Engines (Jamuna's Part)
+* **Pytest Verification:** Ran `python -m pytest tests/ -v` → **`1 passed`** (`tests/scenarios/test_scenarios.py::test_f01_trust_boundary_investigation_loop PASSED` in `1.23s`).
+* **Completed Modules:**
+  * **Schemas:** [backend/app/schemas/](file:///d:/AgentAutopsy(MINI%20Project)/backend/app/schemas/) (`event.py`, `run.py`, `scenarios.py`, `diagnosis.py`, `experiment.py`, `evaluation.py`)
+  * **Benchmark Fixtures:** [backend/app/agents/fixtures.py](file:///d:/AgentAutopsy(MINI%20Project)/backend/app/agents/fixtures.py) (5 failure scenarios `F01–F05`, 5 passing controls `P01–P05`, synthetic orders & 2026/2021 policies)
+  * **Diagnosis Engine:** [backend/app/diagnosis/](file:///d:/AgentAutopsy(MINI%20Project)/backend/app/diagnosis/) (`rules.py`, `outcome_evaluator.py`, `ranker.py`, `llm_assistant.py`)
+  * **Causal Dependency Graph:** [backend/app/dependency/graph_builder.py](file:///d:/AgentAutopsy(MINI%20Project)/backend/app/dependency/graph_builder.py)
+  * **Counterfactual Replay & Sandbox:** [backend/app/replay/](file:///d:/AgentAutopsy(MINI%20Project)/backend/app/replay/) (`interventions.py`, `sandbox.py`, `runner.py`)
+  * **Regression & Reports:** [backend/app/evaluation/](file:///d:/AgentAutopsy(MINI%20Project)/backend/app/evaluation/) (`metrics.py`, `regression_runner.py`) & [backend/app/reports/generator.py](file:///d:/AgentAutopsy(MINI%20Project)/backend/app/reports/generator.py)
+
+#### 🚧 Avinash's Backend Part (Smoke-Tested via FastAPI `TestClient`)
+* **Working right now:**
+  * `GET /health` → `200 OK` (`{'status': 'ok', 'version': '1.0.0', 'storage': 'mongodb'}`) in [backend/app/main.py](file:///d:/AgentAutopsy(MINI%20Project)/backend/app/main.py)
+  * `POST /runs/launch` (with `scenario_id: "F01"`), `GET /runs/`, and `GET /runs/{run_id}/trace` → `200 OK` (executes [support_agent.py](file:///d:/AgentAutopsy(MINI%20Project)/backend/app/agents/support_agent.py) and persists/reads 6 events in MongoDB)
+* **Remaining / Needs Fixing by Avinash:**
+  * `POST /autopsy/{run_id}`, `GET /autopsy/{run_id}`, and `POST /experiments/replay/{run_id}` currently return `404 Not Found` (routers in `autopsy.py`, `experiments.py`, `fixes.py` need matching endpoints wired).
+  * `GET /reports/{run_id}` fails with `ImportError: cannot import name 'generate_autopsy_report' from 'backend.app.reports.generator'`.
+  * `backend/app/api/trace.py` is not mounted in [backend/app/main.py](file:///d:/AgentAutopsy(MINI%20Project)/backend/app/main.py).
+  * `tests/unit/` and `tests/integration/` currently only have `__init__.py` (API/integration tests still need to be written).
+  * Frontend [api.ts](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/services/api.ts) calls `http://localhost:8000/api`, whereas FastAPI currently serves routes at `/` (e.g. `/runs`, not `/api/runs`) — Avinash should either add an `/api` prefix or update `API_BASE_URL`.
+
+---
+
+### 2. Frontend Status (Complete & Built)
+
+* **Build Verification:** Ran `tsc && vite build` in `frontend/` → **passed with 0 errors** (`dist/assets/index-WvxL6klb.js`).
+* **Completed Pages & Features:**
+  * **Design System & Shell:** [tailwind.config.js](file:///d:/AgentAutopsy(MINI%20Project)/frontend/tailwind.config.js), [index.css](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/index.css), [Header.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/components/Header.tsx), [Sidebar.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/components/Sidebar.tsx), [Badge.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/components/Badge.tsx), [JsonViewer.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/components/JsonViewer.tsx)
+  * **Command Center:** [CommandCenterPage.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/pages/CommandCenterPage.tsx) (Hero evidence lineage, KPI sparklines, 5-stage active investigation journey, fault taxonomy, AI insights)
+  * **Runs Explorer & Modals:** [RunsExplorerPage.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/pages/RunsExplorerPage.tsx), [ScenarioLauncherModal.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/components/ScenarioLauncherModal.tsx), [TraceUploadModal.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/components/TraceUploadModal.tsx) (JSON trace normalization into CEF)
+  * **Black Box Timeline & Inspector:** [BlackBoxTimeline.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/features/timeline/BlackBoxTimeline.tsx), [EvidenceInspectorPanel.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/features/timeline/EvidenceInspectorPanel.tsx) (oscilloscope waveform, playback scrubber, Payload/Invariants/Simulator tabs)
+  * **Dependency Graph:** [ForensicFlowGraph.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/features/graph/ForensicFlowGraph.tsx), [CustomNode.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/features/graph/CustomNode.tsx), [StepGroupNode.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/features/graph/StepGroupNode.tsx)
+  * **Autopsy Lab, Replay Lab, Regression & Reports:** [AutopsyWorkspace.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/features/autopsy/AutopsyWorkspace.tsx), [ReplayLabDiff.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/features/replay/ReplayLabDiff.tsx), [RegressionMatrix.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/features/regression/RegressionMatrix.tsx), [ForensicReportPage.tsx](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/pages/ForensicReportPage.tsx)
+* **Live API Switch:** Currently `USE_LIVE_API = false` in [api.ts](file:///d:/AgentAutopsy(MINI%20Project)/frontend/src/services/api.ts) so the UI runs on aligned mock data until Avinash completes the backend endpoints.
